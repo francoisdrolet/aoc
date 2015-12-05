@@ -6,11 +6,14 @@ class AOC2
 	def initialize
 		@presents = []
 		@wrappingPaperSurface = 0
+		@ribbonLength = 0
 		getPresents
 		@presents.each do |present|
 			@wrappingPaperSurface += surface(present) + extra(present)
+			@ribbonLength += ribbon(present) + bow(present)
 		end
 		p @wrappingPaperSurface
+		p @ribbonLength
 	end
 
 	def getPresents#readInput
@@ -31,6 +34,16 @@ class AOC2
 	def extra present#l, w, h
 		l, w, h = present.l, present.w, present.h
 		[l*w, w*h, h*l].min
+	end
+
+	def ribbon present
+		l, w, h = present.l, present.w, present.h
+		[2*(l+w), 2*(w+h), 2*(h+l)].min
+	end
+
+	def bow present
+		l, w, h = present.l, present.w, present.h
+		l*w*h
 	end
 end
 
